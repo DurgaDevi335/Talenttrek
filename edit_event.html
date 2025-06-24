@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Edit Event</title>
+  <style>
+    body { font-family: Arial, sans-serif; padding: 20px; background: #f9f9f9; }
+    form { background: #fff; padding: 20px; border-radius: 8px; max-width: 600px; margin: auto; box-shadow: 0 0 10px rgba(0,0,0,0.1); }
+    h2 { text-align: center; }
+    label { display: block; margin-top: 10px; font-weight: bold; }
+    input[type="text"], input[type="date"], input[type="number"], input[type="url"], select {
+      width: 100%; padding: 8px; margin-top: 4px; border: 1px solid #ccc; border-radius: 4px;
+    }
+    .checkbox-group { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 10px; }
+    .checkbox-group label { font-weight: normal; }
+    button, .back-btn {
+      margin-top: 20px; padding: 10px 20px; background: #007BFF; color: white; border: none;
+      border-radius: 4px; cursor: pointer; text-decoration: none; display: inline-block;
+    }
+    button:hover, .back-btn:hover { background: #0056b3; }
+    .button-group { display: flex; justify-content: space-between; align-items: center; }
+  </style>
+</head>
+<body>
+
+<div class="button-group">
+  <a href="manage.html" class="back-btn">← Back to Manage</a>
+  <h2>Edit Event</h2>
+</div>
+
+<form id="editForm">
+  <input type="hidden" name="eventId" id="eventId">
+
+  <label for="eventName">Event Name *</label>
+  <input type="text" name="eventName" id="eventName" required>
+
+  <label for="registrationFrom">Registration Opens</label>
+  <input type="date" name="registrationFrom" id="registrationFrom">
+
+  <label for="registrationTo">Registration Closes</label>
+  <input type="date" name="registrationTo" id="registrationTo">
+
+  <label for="venue">Venue</label>
+  <input type="text" name="venue" id="venue">
+
+  <label for="fee">Fee (₹)</label>
+  <input type="number" name="fee" id="fee" step="0.01" min="0">
+
+  <label for="eligibility">Eligibility</label>
+  <input type="text" name="eligibility" id="eligibility">
+
+  <label for="category">Category *</label>
+  <select name="category" id="category" required>
+    <option value="">--Select--</option>
+    <option value="hackathon">Hackathon</option>
+    <option value="presentation">Presentation</option>
+    <option value="course">Course</option>
+    <option value="internship">Internship</option>
+    <option value="seminar">Seminar</option>
+    <option value="workshop">Workshop</option>
+    <option value="webinar">Webinar</option>
+    <option value="conference">Conference</option>
+    <option value="competition">Competition</option>
+<option value="other">other</option>
+<option value="all">All</option>
+
+  </select>
+
+  <label>Applicable Branches *</label>
+  <div class="checkbox-group">
+    <label><input type="checkbox" name="branchSelect[]" value="cse"> CSE</label>
+    <label><input type="checkbox" name="branchSelect[]" value="cs"> CS</label>
+    <label><input type="checkbox" name="branchSelect[]" value="ece"> ECE</label>
+    <label><input type="checkbox" name="branchSelect[]" value="eee"> EEE</label>
+    <label><input type="checkbox" name="branchSelect[]" value="mech"> Mechanical</label>
+    <label><input type="checkbox" name="branchSelect[]" value="civil"> Civil</label>
+    <label><input type="checkbox" name="branchSelect[]" value="ai_ds"> AI & DS</label>
+    <label><input type="checkbox" name="branchSelect[]" value="ai_ml"> AI & ML</label>
+    <label><input type="checkbox" name="branchSelect[]" value="it"> IT</label>    <label><input type="checkbox" name="branchSelect[]" value="all"> All</label>
+  </div>
+
+
+  <label for="link">External Link</label>
+  <input type="url" name="link" id="link">
+
+  <button type="submit">Update Event</button>
+</form>
+
+<script>
+document.addEventListener('DOMContentLoaded', () => {
+  const urlParams = new URLSearchParams(window.location.search);
+  const eventId = urlParams.get('id');
+
+  if (!eventId) {
+    alert('Missing event ID');
+    return;
+  }
+
+  fetch(`edit_event.php?id=${eventId}`)
+    .then(res => res.json())
+    .then(data => {
+      if (data.error) {
+        alert(data.error);
+        return;
+      }
+
+      document.getElementById('eventId').value = data.id;
+      document.getElementById('eventName').value = data.event_name || '';
+      document.getElementById('registrationFrom').value = data.registration_from || '';
+      document.getElementById('registrationTo').value = data.registration_to || '';
+      document.getElementById('venue').value = data.venue || '';
+      document.getElementById('fee').value = data.fee || 0;
+      document.getElementById('eligibility').value = data.eligibility || '';
+      document.getElementById('category').value = data.category || '';
+      document.getElementById('link').value = data.link || '';
+
+      const selectedBranches = (data.branches || '').split(',');
+      document.querySelectorAll('[name="branchSelect[]"]').forEach(cb => {
+        cb.checked = selectedBranches.includes(cb.value);
+      });
+    })
+    .catch(err => {
+      console.error(err);
+      alert('Error loading event details.');
+    });
+
+  // Submit Form
+  const form = document.getElementById('editForm');
+  form.addEventListener('submit', function(e) {
+    e.preventDefault();
+    
+    const formData = new FormData(form);
+
+    fetch('update_event.php', {
+      method: 'POST',
+      body: formData
+    })
+    .then(res => res.text())
+    .then(response => {
+      if (response.includes('success')) {
+        alert('Event updated successfully!');
+        // Reload the same edit page
+        location.reload();
+      } else {
+        alert('Update failed. ' + response);
+      }
+    })
+    .catch(err => {
+      console.error(err);
+      alert('Error updating event.');
+    });
+  });
+});
+</script>
+
+</body>
+</html>

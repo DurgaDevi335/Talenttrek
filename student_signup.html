@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Student Signup - Talent Trek</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    <style>
+        body {
+            margin: 0;
+            font-family: 'Segoe UI', sans-serif;
+            background: url('https://images.unsplash.com/photo-1503676260728-1c00da094a0b?q=80&w=1920') no-repeat center center fixed;
+            background-size: cover;
+            color: #333;
+        }
+
+        .home-icon {
+            position: absolute;
+            top: 20px;
+            right: 30px;
+            font-size: 2.5rem;
+            color: white;
+            text-decoration: none;
+            z-index: 1000;
+            transition: color 0.3s ease;
+        }
+
+        .home-icon:hover {
+            color: #ffd700;
+            transform: scale(1.1);
+        }
+
+        .container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+
+        .signup-box {
+            background-color: rgba(255, 255, 255, 0.95);
+            padding: 2.5rem;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4);
+            width: 370px;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .signup-box:hover {
+            transform: scale(1.02);
+            box-shadow: 0 12px 35px rgba(0, 0, 0, 0.6);
+        }
+
+        .signup-box h2 {
+            text-align: center;
+            margin-bottom: 2rem;
+            color: #0078d7;
+        }
+
+        .signup-box input {
+            width: 100%;
+            padding: 12px;
+            margin: 12px 0;
+            border: 1px solid #ccc;
+            border-radius: 6px;
+            font-size: 1rem;
+        }
+
+        .signup-box button {
+            width: 100%;
+            padding: 14px;
+            background-color: #0078d7;
+            border: none;
+            color: white;
+            font-size: 1.1rem;
+            font-weight: bold;
+            border-radius: 6px;
+            cursor: pointer;
+            transition: background 0.3s ease;
+        }
+
+        .signup-box button:hover {
+            background-color: #005fa3;
+        }
+
+        .signup-box .options {
+            margin-top: 15px;
+            text-align: center;
+        }
+
+        .signup-box .options a {
+            color: #0078d7;
+            text-decoration: none;
+            font-weight: bold;
+            margin: 0 10px;
+            transition: color 0.3s ease;
+        }
+
+        .signup-box .options a:hover {
+            color: #005fa3;
+        }
+    </style>
+</head>
+<body>
+    <a class="home-icon" href="index.html"><i class="fas fa-home"></i></a>
+    <div class="container">
+        <div class="signup-box">
+            <h2>Student Signup</h2>
+            <form action="student_signup.php" method="post">
+                <input type="text" name="reg_number" placeholder="Registration Number" required>
+                <input type="email" name="email" placeholder="Email" required>
+                <input type="password" name="password" placeholder="Password" required>
+                <input type="password" name="confirm_password" placeholder="Confirm Password" required>
+                <button type="submit">Signup</button>
+                <div class="options">
+                    <a href="student_login.html">Already have an account? Login</a>
+                </div>
+            </form>
+        </div>
+    </div>
+</body>
+</html>

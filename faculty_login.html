@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Faculty Login - TalentTrek</title>
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet" />
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: 'Inter', sans-serif;
+    }
+    body {
+      min-height: 100vh;
+      background: url('https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT0fzbc3Wc7YqnzSuRamgFH87mjFU3fakjRew&s') no-repeat center center fixed;
+      background-size: cover;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      padding: 40px 20px;
+      color: #2c3e50;
+      position: relative;
+    }
+    .home-icon {
+      position: fixed;
+      top: 20px;
+      right: 30px;
+      z-index: 10;
+    }
+    .home-icon a {
+      background-color: #ffffffdd;
+      color: #2c3e50;
+      padding: 12px 16px;
+      border-radius: 10px;
+      text-decoration: none;
+      font-size: 24px;
+      box-shadow: 0 6px 15px rgba(0, 0, 0, 0.15);
+      transition: background 0.3s ease, color 0.3s ease;
+    }
+    .home-icon a:hover {
+      background-color: #2c3e50;
+      color: white;
+    }
+    .auth-container {
+      background: rgba(255, 255, 255, 0.96);
+      max-width: 400px;
+      width: 100%;
+      padding: 45px 35px;
+      border-radius: 25px;
+      box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+      text-align: center;
+      position: relative;
+      z-index: 5;
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+    .auth-container:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 25px 70px rgba(0, 0, 0, 0.4);
+    }
+    .auth-container h2 {
+      margin-bottom: 30px;
+      font-weight: 700;
+      font-size: 30px;
+      color: #2c3e50;
+    }
+    form {
+      display: flex;
+      flex-direction: column;
+    }
+    .input-group {
+      position: relative;
+      margin-bottom: 20px;
+    }
+    input[type='email'],
+    input[type='password'] {
+      width: 100%;
+      padding: 14px 45px 14px 40px;
+      border: 2px solid #ccc;
+      border-radius: 15px;
+      font-size: 17px;
+      font-weight: 600;
+    }
+    input:focus {
+      border-color: #009688;
+      outline: none;
+      box-shadow: 0 0 10px rgba(0, 150, 136, 0.4);
+    }
+    .input-group .icon {
+      position: absolute;
+      top: 50%;
+      left: 12px;
+      transform: translateY(-50%);
+      color: #009688;
+      font-size: 20px;
+    }
+    button {
+      padding: 14px;
+      background-color: #009688;
+      border: none;
+      border-radius: 20px;
+      color: white;
+      font-weight: bold;
+      font-size: 18px;
+      cursor: pointer;
+      margin-top: 10px;
+      transition: background 0.3s ease, box-shadow 0.3s ease;
+    }
+    button:hover {
+      background-color: #00796b;
+      box-shadow: 0 8px 20px rgba(0, 121, 107, 0.4);
+    }
+    .links {
+      margin-top: 20px;
+      font-size: 15px;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+    .links a {
+      color: #009688;
+      font-weight: 700;
+      text-decoration: none;
+    }
+    .links a:hover {
+      text-decoration: underline;
+    }
+  </style>
+<link rel="stylesheet" href="darkmode.css">
+
+</head>
+<body>
+  <div class="home-icon" title="Home">
+    <a href="home.html"><i class="fas fa-home"></i></a>
+  </div>
+  <div class="auth-container">
+    <h2>Faculty Login</h2>
+    <form action="faculty_login.php" method="POST">
+      <div class="input-group">
+        <i class="fas fa-envelope icon"></i>
+        <input type="email" name="email" placeholder="Email" required />
+      </div>
+      <div class="input-group">
+        <i class="fas fa-lock icon"></i>
+        <input type="password" name="password" placeholder="Password" required />
+      </div>
+      <button type="submit">Login</button>
+      <div class="links">
+        <a href="faculty_signup.html">Don't have an account? Sign up</a>
+        <a href="forgot_password.html">Forgot Password?</a>
+      </div>
+    </form>
+  </div>
+<script src="darkmode.js"></script>
+
+</body>
+</html>

@@ -1,0 +1,280 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Dashboard - TalentTrek</title>
+  <link
+    href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css"
+    rel="stylesheet"
+  />
+  <style>
+    /* Reset */
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #f4f4f4;
+      color: #2c3e50;
+      display: flex;
+      height: 100vh;
+      flex-direction: column;
+      transition: background-color 0.3s, color 0.3s;
+    }
+
+    /* Top Horizontal Bar */
+    .top-bar {
+      background-color: #2c3e50;
+      color: white;
+      padding: 30px 20px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      font-size: 2rem;
+      font-weight: bold;
+      text-transform: uppercase;
+      letter-spacing: 2px;
+      position: relative;
+      transition: background-color 0.3s;
+    }
+
+    .top-bar .home-icon,
+    .top-bar .logout-icon {
+      position: absolute;
+      top: 50%;
+      transform: translateY(-50%);
+      font-size: 2rem;
+      color: white;
+      text-decoration: none;
+      transition: color 0.3s;
+      cursor: pointer;
+    }
+
+    .top-bar .home-icon {
+      right: 80px;
+    }
+
+    .top-bar .logout-icon {
+      right: 20px;
+    }
+
+    .top-bar .home-icon:hover,
+    .top-bar .logout-icon:hover {
+      color: #16a085;
+    }
+
+    .dashboard-container {
+      display: flex;
+      width: 100%;
+      flex-grow: 1;
+      height: 100%;
+    }
+
+    /* Vertical Taskbar */
+    .taskbar {
+      background-color: #2c3e50;
+      width: 300px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding-top: 20px;
+      transition: background-color 0.3s;
+    }
+
+    .taskbar-item {
+      background-color: #34495e;
+      color: white;
+      border: none;
+      width: 150px;
+      height: 150px;
+      margin-bottom: 20px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      border-radius: 12px;
+      cursor: pointer;
+      transition: background-color 0.3s;
+      flex-direction: column;
+      text-decoration: none;
+    }
+
+    .taskbar-item:hover {
+      background-color: #16a085;
+    }
+
+    .taskbar-item i {
+      font-size: 2.5rem;
+      transition: font-size 0.3s;
+    }
+
+    .taskbar-item:hover i {
+      font-size: 3rem;
+    }
+
+    .taskbar-label {
+      font-size: 25px;
+      margin-top: 16px;
+    }
+
+    /* Main Content Area */
+    .main-content {
+      flex-grow: 1;
+      background-color: #ecf0f1;
+      padding: 20px;
+      display: flex;
+      flex-direction: column;
+      transition: background-color 0.3s, color 0.3s;
+    }
+
+    header {
+      display: flex;
+      justify-content: flex-end;
+      margin-bottom: 20px;
+    }
+
+    .header-right {
+      display: flex;
+      gap: 20px;
+    }
+
+    .header-item {
+      background-color: #2c3e50;
+      color: white;
+      border: none;
+      width: 50px;
+      height: 50px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      border-radius: 8px;
+      cursor: pointer;
+      transition: background-color 0.3s;
+      text-decoration: none;
+    }
+
+    .header-item:hover {
+      background-color: #16a085;
+    }
+
+    /* Main Heading */
+    .main-content h1 {
+      font-size: 2rem;
+      color: #2c3e50;
+    }
+
+    main {
+      flex-grow: 1;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      text-align: center;
+    }
+
+    /* Dark Mode Styles */
+    body.dark-mode {
+      background-color: #2c3e50;
+      color: #ecf0f1;
+    }
+
+    body.dark-mode .top-bar {
+      background-color: #1a2a38;
+      color: #ecf0f1;
+    }
+
+    body.dark-mode .top-bar .home-icon,
+    body.dark-mode .top-bar .logout-icon {
+      color: #1abc9c;
+    }
+
+    body.dark-mode .top-bar .home-icon:hover,
+    body.dark-mode .top-bar .logout-icon:hover {
+      color: #16a085;
+    }
+
+    body.dark-mode .taskbar {
+      background-color: #1a2a38;
+    }
+
+    body.dark-mode .taskbar-item {
+      background-color: #233445;
+      color: #ecf0f1;
+    }
+
+    body.dark-mode .taskbar-item:hover {
+      background-color: #16a085;
+      color: white;
+    }
+
+    body.dark-mode .main-content {
+      background-color: #34495e;
+      color: #ecf0f1;
+    }
+
+    body.dark-mode .header-item {
+      background-color: #233445;
+      color: #ecf0f1;
+    }
+
+    body.dark-mode .header-item:hover {
+      background-color: #16a085;
+    }
+  </style>
+</head>
+<body>
+  <!-- Top Horizontal Bar with TalentTrek Title, Home Icon, and Logout Icon -->
+  <div class="top-bar">
+    TalentTrek
+    <a href="home.html" class="home-icon" title="Home">
+      <i class="fas fa-home"></i>
+    </a>
+    <a href="faculty_login.html" class="logout-icon" title="Logout" onclick="logout()">
+      <i class="fas fa-sign-out-alt"></i>
+    </a>
+  </div>
+
+  <div class="dashboard-container">
+    <!-- Vertical Taskbar -->
+    <div class="taskbar">
+      <a href="upload1.html" class="taskbar-item" title="Upload Events">
+        <i class="fas fa-upload"></i>
+        <span class="taskbar-label">Upload</span>
+      </a>
+      <a href="view.html" class="taskbar-item" title="View Events">
+        <i class="fas fa-eye"></i>
+        <span class="taskbar-label">View</span>
+      </a>
+      <a href="manage.html" class="taskbar-item" title="Manage Events">
+        <i class="fas fa-cogs"></i>
+        <span class="taskbar-label">Manage</span>
+      </a>
+    </div>
+
+    <!-- Main Content Area -->
+    <div class="main-content">
+      <header>
+        <div class="header-right">
+          <!-- Removed Profile Button as requested -->
+          <a href="faculty_settings.php" class="header-item" title="Settings">
+            <i class="fas fa-cogs"></i>
+          </a>
+        </div>
+      </header>
+      <main>
+        <!-- Main dashboard content can go here -->
+      </main>
+    </div>
+  </div>
+
+  <script>
+    function logout() {
+      // You can add session clearing logic here if you have sessions
+      window.location.href = 'home.html';
+    }
+
+      </script>
+</body>
+</html>

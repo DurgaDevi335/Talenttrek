@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>View Event Details</title>
+<style>
+ body{font-family:Arial,Helvetica,sans-serif;margin:20px}
+ .header{display:flex;justify-content:space-between;align-items:center;margin-bottom:20px}
+ .filters{display:flex;gap:20px;flex-wrap:wrap}
+ .filters label{font-weight:bold;margin-right:6px}
+ select{padding:6px;border:1px solid #ccc;border-radius:4px}
+ table{width:100%;border-collapse:collapse;margin-top:20px}
+ th,td{border:1px solid #ddd;padding:8px;text-align:left;font-size:14px}
+ th{background:#f2f2f2}
+ a{color:#008cba;text-decoration:none}
+ a:hover{text-decoration:underline}
+ .no-data{font-style:italic;color:#777;text-align:center;padding:20px}
+</style>
+</head>
+<body>
+
+<button onclick="location.href='faculty_dashboard.html'">Back to Dashboard</button>
+
+<div class="header">
+  <h2>Event Details</h2>
+  <div class="filters">
+    <div>
+      <label for="categorySelect">Category:</label>
+      <select id="categorySelect" onchange="fetchEvents()">
+        <option value="all">All</option>
+        <option value="hackathon">Hackathon</option>
+        <option value="presentation">Presentation</option>
+        <option value="course">Course</option>
+        <option value="internship">Internship</option>
+        <option value="seminar">Seminar</option>
+        <option value="workshop">Workshop</option>
+        <option value="webinar">Webinar</option>
+        <option value="conference">Conference</option>
+        <option value="competition">Competition</option>
+ <option value="other">other</option>
+      </select>
+    </div>
+    <div>
+      <label for="branchSelect">Branch:</label>
+      <select id="branchSelect" onchange="fetchEvents()">
+        <option value="all">All</option>
+        <option value="cse">CSE</option>
+        <option value="cs">CS</option>
+        
+<option value="it">IT</option>
+        <option value="ece">ECE</option>
+        <option value="eee">EEE</option>
+        <option value="mech">Mechanical</option>
+        <option value="civil">Civil</option>
+        <option value="ai_ds">AI & DS</option>
+        <option value="ai_ml">AI & ML</option>
+      </select>
+    </div>
+  </div>
+</div>
+
+<table id="eventTable">
+  <thead>
+    <tr>
+      <th>Event Name</th><th>Reg Opens</th><th>Reg Closes</th><th>Venue</th>
+      <th>Fee (₹)</th><th>Eligibility</th><th>Category</th><th>Branches</th><th>Link</th>
+    </tr>
+  </thead>
+  <tbody></tbody>
+</table>
+
+<script>
+async function fetchEvents(){
+  const cat=document.getElementById('categorySelect').value;
+  const br =document.getElementById('branchSelect').value;
+  try{
+    const res = await fetch(`view.php?category=${encodeURIComponent(cat)}&branch=${encodeURIComponent(br)}`);
+    const data= await res.json();
+    console.log('Events returned →',data);          // <-- console log for debugging
+    populateTable(data);
+  }catch(e){
+    console.error('Fetch problem:',e);
+    populateTable([]);
+  }
+}
+
+function populateTable(events){
+  const tbody=document.querySelector('#eventTable tbody');
+  tbody.innerHTML='';
+  if(events.length===0){
+    tbody.innerHTML=`<tr><td colspan="9" class="no-data">No events found.</td></tr>`;
+    return;
+  }
+  events.forEach(ev=>{
+    const tr=document.createElement('tr');
+    tr.innerHTML=`
+      <td>${ev.eventName}</td>
+      <td>${ev.registrationFrom||'-'}</td>
+      <td>${ev.registrationTo||'-'}</td>
+      <td>${ev.venue||'-'}</td>
+      <td>${ev.fee==0?'Free':ev.fee}</td>
+      <td>${ev.eligibility||'-'}</td>
+      <td>${ev.category}</td>
+      <td>${ev.branches}</td>
+      <td>${ev.link?`<a href="${ev.link}" target="_blank">View</a>`:'-'}</td>`;
+    tbody.appendChild(tr);
+  });
+}
+window.onload=fetchEvents;
+</script>
+</body>
+</html>

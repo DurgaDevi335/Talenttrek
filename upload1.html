@@ -1,0 +1,345 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Upload Event - TalentTrek</title>
+<style>
+    body {
+        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        margin: 0;
+        padding: 20px;
+        background: #ffffff;
+        color: #2c3e50;
+        min-height: 100vh;
+        display: flex;
+        justify-content: center;
+        align-items: flex-start;
+    }
+
+    .container {
+        background: #f9f9f9;
+        max-width: 700px;
+        width: 100%;
+        border-radius: 12px;
+        box-shadow: 0 8px 24px rgba(44, 62, 80, 0.15);
+        padding: 30px 35px 40px;
+        box-sizing: border-box;
+        color: #2c3e50;
+    }
+
+    h2 {
+        margin-bottom: 15px;
+        font-weight: 700;
+        color: #2c3e50;
+        text-align: center;
+    }
+
+    .back-btn {
+        display: inline-block;
+        margin-bottom: 20px;
+        background: transparent;
+        border: 2px solid #2c3e50;
+        color: #2c3e50;
+        font-weight: 600;
+        padding: 8px 18px;
+        border-radius: 8px;
+        cursor: pointer;
+        text-decoration: none;
+        transition: all 0.3s ease;
+    }
+
+    .back-btn:hover {
+        background-color: #2c3e50;
+        color: #fff;
+    }
+
+    .section {
+        margin-bottom: 25px;
+        border: 1px solid #ccc;
+        border-radius: 10px;
+        overflow: hidden;
+        background-color: #ffffff;
+    }
+
+    .section-header {
+        background: #e9ecef;
+        color: #2c3e50;
+        padding: 14px 20px;
+        cursor: pointer;
+        font-weight: 600;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        font-size: 16px;
+    }
+
+    .section-header:hover {
+        background: #d6dbdf;
+    }
+
+    .section-header .arrow {
+        transition: transform 0.3s ease;
+        font-size: 18px;
+    }
+
+    .section.collapsed .section-header .arrow {
+        transform: rotate(-90deg);
+    }
+
+    .section-content {
+        padding: 20px;
+        display: block;
+    }
+
+    .section.collapsed .section-content {
+        display: none;
+    }
+
+    label {
+        display: block;
+        margin-top: 14px;
+        font-weight: 600;
+        color: #2c3e50;
+    }
+
+    input[type="text"],
+    input[type="number"],
+    input[type="date"],
+    input[type="url"],
+    select,
+    textarea {
+        width: 100%;
+        padding: 10px 12px;
+        margin-top: 6px;
+        border: 1.5px solid #ccc;
+        border-radius: 6px;
+        font-size: 15px;
+        background: #fff;
+        color: #2c3e50;
+        box-sizing: border-box;
+        transition: border-color 0.3s ease;
+        resize: vertical;
+    }
+
+    input::placeholder,
+    textarea::placeholder {
+        color: #888;
+        font-style: italic;
+    }
+
+    input:focus,
+    textarea:focus,
+    select:focus {
+        outline: none;
+        border-color: #16a085;
+        background: #f3f8f7;
+    }
+
+    textarea {
+        min-height: 90px;
+    }
+
+    .checkbox-group {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 15px;
+        margin-top: 8px;
+    }
+
+    .checkbox-group label {
+        font-weight: 500;
+        font-size: 14px;
+        cursor: pointer;
+        color: #2c3e50;
+    }
+
+    .checkbox-group input[type="checkbox"] {
+        margin-right: 6px;
+        cursor: pointer;
+        accent-color: #16a085;
+    }
+
+    .buttons {
+        display: flex;
+        justify-content: flex-end;
+        margin-top: 30px;
+    }
+
+    button {
+        cursor: pointer;
+        padding: 12px 24px;
+        font-size: 16px;
+        font-weight: 600;
+        border-radius: 8px;
+        border: none;
+        background-color: #2c3e50;
+        color: #fff;
+        box-shadow: 0 4px 10px rgba(44, 62, 80, 0.3);
+        transition: background-color 0.3s ease;
+    }
+
+    button:hover {
+        background-color: #1c2a38;
+    }
+
+    .error-message {
+        color: #d9534f;
+        margin-top: 12px;
+        font-size: 15px;
+        text-align: center;
+        font-weight: 600;
+    }
+
+    sup {
+        color: #d9534f;
+    }
+</style>
+</head>
+<body>
+
+<div class="container">
+    <a href="faculty_dashboard.html" class="back-btn">&#8592; Back to Dashboard</a>
+    <h2>Upload Event</h2>
+    <form id="eventForm" action="event_upload.php" method="POST" novalidate>
+
+        <!-- Section 1 -->
+        <div class="section" id="section1">
+            <div class="section-header">
+                Basic Info
+                <span class="arrow">&#9654;</span>
+            </div>
+            <div class="section-content">
+                <label for="eventName">Event Name <sup>*</sup></label>
+                <input type="text" id="eventName" name="eventName" placeholder="e.g., AI Hackathon 2025" required />
+
+                <label for="category">Category <sup>*</sup></label>
+                <select id="category" name="category" required>
+                    <option value="" disabled selected>-- Select Category --</option>
+                    <option value="hackathon">Hackathon</option>
+                    <option value="presentation">Presentation</option>
+                    <option value="course">Course</option>
+                    <option value="internship">Internship</option>
+                    <option value="seminar">Seminar</option>
+                    <option value="workshop">Workshop</option>
+                    <option value="webinar">Webinar</option>
+                    <option value="conference">Conference</option>
+                    <option value="competition">Competition</option>
+                    <option value="other">Other</option>
+<option value="all">All</option>
+
+
+                </select>
+
+                <label for="venue">Venue (optional)</label>
+                <input type="text" id="venue" name="venue" placeholder="e.g., Auditorium, Online Zoom, etc." />
+            </div>
+        </div>
+
+        <!-- Section 2 -->
+        <div class="section collapsed" id="section2">
+            <div class="section-header">
+                Registration & Fee
+                <span class="arrow">&#9654;</span>
+            </div>
+            <div class="section-content">
+                <label for="registrationFrom">Registration Opens</label>
+                <input type="date" id="registrationFrom" name="registrationFrom" />
+
+                <label for="registrationTo">Registration Closes</label>
+                <input type="date" id="registrationTo" name="registrationTo" />
+
+                <label for="fee">Fee (optional)</label>
+                <input type="number" id="fee" name="fee" placeholder="0 for free, or amount in ₹" min="0" />
+            </div>
+        </div>
+
+        <!-- Section 3 -->
+        <div class="section collapsed" id="section3">
+            <div class="section-header">
+                Additional Details
+                <span class="arrow">&#9654;</span>
+            </div>
+            <div class="section-content">
+                <label for="eligibility">Eligibility (optional)</label>
+                <textarea id="eligibility" name="eligibility" placeholder="e.g., Only for CSE and ECE students"></textarea>
+
+                <label for="link">Event Link (optional)</label>
+                <input type="url" id="link" name="link" placeholder="https://example.com/register" />
+
+                <label>Applicable Branches <sup>*</sup></label>
+                <div class="checkbox-group">
+                    <label><input type="checkbox" name="branchSelect[]" value="cse" /> CSE</label>
+<label><input type="checkbox" name="branchSelect[]" value="it" /> IT</label>
+
+                    <label><input type="checkbox" name="branchSelect[]" value="cs" /> CS</label>
+                    <label><input type="checkbox" name="branchSelect[]" value="ece" /> ECE</label>
+                    <label><input type="checkbox" name="branchSelect[]" value="eee" /> EEE</label>
+                    <label><input type="checkbox" name="branchSelect[]" value="mech" /> Mech</label>
+                    <label><input type="checkbox" name="branchSelect[]" value="civil" /> Civil</label>
+                    <label><input type="checkbox" name="branchSelect[]" value="ai_ds" /> AI & DS</label>
+                    <label><input type="checkbox" name="branchSelect[]" value="ai_ml" /> AI & ML</label>
+                    <label><input type="checkbox" name="branchSelect[]" value="all" /> All Branches</label>
+                </div>
+            </div>
+        </div>
+
+        <div class="error-message" id="error-message"></div>
+
+        <div class="buttons">
+            <button type="submit">Submit Event</button>
+        </div>
+    </form>
+</div>
+
+<script>
+    document.querySelectorAll('.section-header').forEach(header => {
+        header.addEventListener('click', () => {
+            const section = header.parentElement;
+            section.classList.toggle('collapsed');
+        });
+    });
+
+    const form = document.getElementById('eventForm');
+    const errorDiv = document.getElementById('error-message');
+
+    function validateForm() {
+        errorDiv.textContent = '';
+
+        if (!form.eventName.value.trim()) {
+            errorDiv.textContent = 'Please enter the event name.';
+            return false;
+        }
+        if (!form.category.value) {
+            errorDiv.textContent = 'Please select a category.';
+            return false;
+        }
+        const branchesChecked = document.querySelectorAll('input[name="branchSelect[]"]:checked');
+        if (branchesChecked.length === 0) {
+            errorDiv.textContent = 'Please select at least one applicable branch.';
+            return false;
+        }
+        if (form.fee.value && Number(form.fee.value) < 0) {
+            errorDiv.textContent = 'Fee cannot be negative.';
+            return false;
+        }
+        if (form.registrationFrom.value && form.registrationTo.value) {
+            if (form.registrationFrom.value > form.registrationTo.value) {
+                errorDiv.textContent = 'Opening date cannot be after closing date.';
+                return false;
+            }
+        }
+        if (form.link.value && !form.link.checkValidity()) {
+            errorDiv.textContent = 'Please enter a valid event URL.';
+            return false;
+        }
+        return true;
+    }
+
+    form.addEventListener('submit', e => {
+        if (!validateForm()) e.preventDefault();
+    });
+</script>
+
+</body>
+</html>

@@ -31,8 +31,11 @@ TalentTrek is a web-based platform that allows faculty and students to manage ta
 1. Clone the repository:
    ```bash
 git clone https://github.com/DurgaDevi335/talenttrek.git
+
 2. Place the files inside your XAMPP htdocs folder
+   
 3. Start Apache and MySQL from XAMPP control panel
+   
 4. Open browser and go to:
 http://localhost/talenttrek
 
